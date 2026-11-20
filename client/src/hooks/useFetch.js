@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import client from "../api/axiosInstance.js";
 
-// GETs `url` (with optional query `params`) and tracks loading and error.
-// Pass url = null to skip the request. Call reload() to fetch again.
 export function useFetch(url, params) {
   const clean = Object.fromEntries(
-    Object.entries(params || {}).filter(([, v]) => v !== "" && v != null)
+    Object.entries(params || {}).filter(([, v]) => v !== "" && v != null),
   );
   const key = url ? JSON.stringify([url, clean]) : null;
 
@@ -24,7 +22,11 @@ export function useFetch(url, params) {
       })
       .catch((err) => {
         if (!cancelled) {
-          setState({ key, data: null, error: err.response?.data?.message || err.message });
+          setState({
+            key,
+            data: null,
+            error: err.response?.data?.message || err.message,
+          });
         }
       });
 

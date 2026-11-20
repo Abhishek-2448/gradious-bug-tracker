@@ -34,8 +34,12 @@ function BugDetailPage() {
     }
   };
 
-  const changeStatus = (e) => run(() => client.patch(`/bugs/${id}/status`, { status: e.target.value }));
-  const changeAssignee = (e) => run(() => client.patch(`/bugs/${id}/assign`, { assignee: e.target.value || null }));
+  const changeStatus = (e) =>
+    run(() => client.patch(`/bugs/${id}/status`, { status: e.target.value }));
+  const changeAssignee = (e) =>
+    run(() =>
+      client.patch(`/bugs/${id}/assign`, { assignee: e.target.value || null }),
+    );
 
   const handleDelete = async () => {
     if (!window.confirm("Delete this bug and its comments?")) return;
@@ -60,26 +64,48 @@ function BugDetailPage() {
         <div className="page-header">
           <h2>{bug.title}</h2>
           <div className="actions">
-            {canEdit && <Link className="button secondary" to={`/bugs/${id}/edit`}>Edit</Link>}
-            {isAdmin && <button className="danger" onClick={handleDelete}>Delete</button>}
+            {canEdit && (
+              <Link className="button secondary" to={`/bugs/${id}/edit`}>
+                Edit
+              </Link>
+            )}
+            {isAdmin && (
+              <button className="danger" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
           </div>
         </div>
 
         <p>{bug.description || "No description."}</p>
 
         <dl className="details">
-          <dt>Project</dt><dd>{bug.project?.name ?? "-"}</dd>
-          <dt>Severity</dt><dd><Badge value={bug.severity} /></dd>
-          <dt>Priority</dt><dd><Badge value={bug.priority} /></dd>
-          <dt>Reporter</dt><dd>{nameOf(bug.reporter)}</dd>
-          <dt>Created</dt><dd>{formatDate(bug.createdAt)}</dd>
-          <dt>Updated</dt><dd>{formatDate(bug.updatedAt)}</dd>
+          <dt>Project</dt>
+          <dd>{bug.project?.name ?? "-"}</dd>
+          <dt>Severity</dt>
+          <dd>
+            <Badge value={bug.severity} />
+          </dd>
+          <dt>Priority</dt>
+          <dd>
+            <Badge value={bug.priority} />
+          </dd>
+          <dt>Reporter</dt>
+          <dd>{nameOf(bug.reporter)}</dd>
+          <dt>Created</dt>
+          <dd>{formatDate(bug.createdAt)}</dd>
+          <dt>Updated</dt>
+          <dd>{formatDate(bug.updatedAt)}</dd>
 
           <dt>Status</dt>
           <dd>
             {canChangeStatus ? (
               <select value={bug.status} onChange={changeStatus}>
-                {STATUSES.map((s) => <option key={s.value} value={s.value}>{s.label}</option>)}
+                {STATUSES.map((s) => (
+                  <option key={s.value} value={s.value}>
+                    {s.label}
+                  </option>
+                ))}
               </select>
             ) : (
               <Badge value={bug.status} />
@@ -91,7 +117,11 @@ function BugDetailPage() {
             {isAdmin ? (
               <select value={bug.assignee ?? ""} onChange={changeAssignee}>
                 <option value="">Unassigned</option>
-                {developers.map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}
+                {developers.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name}
+                  </option>
+                ))}
               </select>
             ) : (
               nameOf(bug.assignee)

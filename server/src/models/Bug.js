@@ -41,7 +41,7 @@ const bugSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Bug = mongoose.model("Bug", bugSchema);

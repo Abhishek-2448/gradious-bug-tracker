@@ -2,8 +2,6 @@ import express from "express";
 import users, { publicUser } from "../data/users.js";
 import { identifyUser } from "../middleware/auth.js";
 
-
-
 const router = express.Router();
 
 router.post("/login", (req, res) => {

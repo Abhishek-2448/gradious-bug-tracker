@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import Logo from "../../components/Logo.jsx";
 
-// Demo accounts for training only. These match server/src/data/users.js
 const DEMO_ACCOUNTS = [
   { label: "Admin", email: "admin@gradious.com", password: "admin123" },
   { label: "Developer", email: "dev1@gradious.com", password: "dev123" },

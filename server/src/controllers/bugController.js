@@ -75,7 +75,9 @@ export const createBug = async (req, res) => {
     const { title, description, severity, priority, project } = req.body;
 
     if (!title || !project) {
-      return res.status(400).json({ message: "Title and project are required" });
+      return res
+        .status(400)
+        .json({ message: "Title and project are required" });
     }
     if (!mongoose.isValidObjectId(project)) {
       return res.status(400).json({ message: "Invalid project id" });
@@ -112,7 +114,9 @@ export const updateBug = async (req, res) => {
     const isAdmin = req.user.role === "admin";
     const isReporter = bug.reporter === req.user.id;
     if (!isAdmin && !isReporter) {
-      return res.status(403).json({ message: "You are not allowed to edit this bug" });
+      return res
+        .status(403)
+        .json({ message: "You are not allowed to edit this bug" });
     }
 
     const { title, description, severity, priority } = req.body;
@@ -136,20 +140,26 @@ export const assignBug = async (req, res) => {
 
     const { assignee } = req.body;
     if (assignee === undefined) {
-      return res.status(400).json({ message: "assignee is required (use null to unassign)" });
+      return res
+        .status(400)
+        .json({ message: "assignee is required (use null to unassign)" });
     }
 
     if (assignee !== null) {
-      const developer = users.find((u) => u.id === assignee && u.role === "developer");
+      const developer = users.find(
+        (u) => u.id === assignee && u.role === "developer",
+      );
       if (!developer) {
-        return res.status(400).json({ message: "Assignee must be a developer" });
+        return res
+          .status(400)
+          .json({ message: "Assignee must be a developer" });
       }
     }
 
     const bug = await Bug.findByIdAndUpdate(
       req.params.id,
       { assignee },
-      { new: true }
+      { new: true },
     );
     if (!bug) {
       return res.status(404).json({ message: "Bug not found" });
@@ -181,7 +191,9 @@ export const updateBugStatus = async (req, res) => {
     const isAdmin = req.user.role === "admin";
     const isAssignee = bug.assignee === req.user.id;
     if (!isAdmin && !isAssignee) {
-      return res.status(403).json({ message: "Only the assignee or an admin can change status" });
+      return res
+        .status(403)
+        .json({ message: "Only the assignee or an admin can change status" });
     }
 
     bug.status = status;

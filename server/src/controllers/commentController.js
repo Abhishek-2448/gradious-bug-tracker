@@ -32,7 +32,9 @@ export const addComment = async (req, res) => {
     return res.status(400).json({ message: "Comment text is required" });
   }
   if (text.length > 1000) {
-    return res.status(400).json({ message: "Comment must be 1000 characters or less" });
+    return res
+      .status(400)
+      .json({ message: "Comment must be 1000 characters or less" });
   }
 
   const comment = await Comment.create({

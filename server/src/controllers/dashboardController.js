@@ -13,16 +13,20 @@ const countBy = async (field, values) => {
 };
 
 export const getStats = async (req, res) => {
-  const [total, byStatus, bySeverity, myReported, assignedToMe] = await Promise.all([
-    Bug.countDocuments(),
-    countBy("status", Bug.schema.path("status").enumValues),
-    countBy("severity", Bug.schema.path("severity").enumValues),
-    Bug.countDocuments({ reporter: req.user.id }),
-    Bug.find({ assignee: req.user.id, status: { $nin: ["resolved", "closed"] } })
-      .populate("project", "name")
-      .sort({ createdAt: -1 })
-      .limit(5),
-  ]);
+  const [total, byStatus, bySeverity, myReported, assignedToMe] =
+    await Promise.all([
+      Bug.countDocuments(),
+      countBy("status", Bug.schema.path("status").enumValues),
+      countBy("severity", Bug.schema.path("severity").enumValues),
+      Bug.countDocuments({ reporter: req.user.id }),
+      Bug.find({
+        assignee: req.user.id,
+        status: { $nin: ["resolved", "closed"] },
+      })
+        .populate("project", "name")
+        .sort({ createdAt: -1 })
+        .limit(5),
+    ]);
 
   res.json({ total, byStatus, bySeverity, myReported, assignedToMe });
 };

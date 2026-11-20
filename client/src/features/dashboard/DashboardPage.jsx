@@ -31,14 +31,21 @@ function DashboardPage() {
     <div>
       <div className="page-header">
         <h1 className="greeting">Hey {user.name.toUpperCase()} !</h1>
-        <Link className="button" to="/bugs/new">Report a bug</Link>
+        <Link className="button" to="/bugs/new">
+          Report a bug
+        </Link>
       </div>
 
       <div className="card">
         <h3>Bugs by status</h3>
         <div className="activity-grid">
           {STATUSES.map((s) => (
-            <ActivityCard key={s.value} label={s.label} value={data.byStatus[s.value]} total={data.total} />
+            <ActivityCard
+              key={s.value}
+              label={s.label}
+              value={data.byStatus[s.value]}
+              total={data.total}
+            />
           ))}
         </div>
       </div>
@@ -47,7 +54,12 @@ function DashboardPage() {
         <h3>Bugs by severity</h3>
         <div className="activity-grid">
           {SEVERITIES.map((s) => (
-            <ActivityCard key={s} label={labelOf(s)} value={data.bySeverity[s]} total={data.total} />
+            <ActivityCard
+              key={s}
+              label={labelOf(s)}
+              value={data.bySeverity[s]}
+              total={data.total}
+            />
           ))}
         </div>
       </div>
@@ -68,7 +80,9 @@ function DashboardPage() {
           <Link className="strip-item" key={bug._id} to={`/bugs/${bug._id}`}>
             <span className="strip-title">{bug.title}</span>
             <span className="muted">{bug.project?.name}</span>
-            <span><Badge value={bug.status} /></span>
+            <span>
+              <Badge value={bug.status} />
+            </span>
           </Link>
         ))}
       </div>

@@ -11,12 +11,15 @@ function ProjectForm({ project, developers, onSaved, onCancel }) {
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const toggleMember = (id) =>
     setForm((f) => ({
       ...f,
-      members: f.members.includes(id) ? f.members.filter((m) => m !== id) : [...f.members, id],
+      members: f.members.includes(id)
+        ? f.members.filter((m) => m !== id)
+        : [...f.members, id],
     }));
 
   const onSubmit = async (e) => {
@@ -41,15 +44,33 @@ function ProjectForm({ project, developers, onSaved, onCancel }) {
   return (
     <form className="card form" onSubmit={onSubmit}>
       <h3>{project ? "Edit project" : "New project"}</h3>
-      <label>Name<input name="name" value={form.name} onChange={onChange} /></label>
-      <label>Client or student<input name="clientName" value={form.clientName} onChange={onChange} /></label>
-      <label>Description<textarea name="description" rows="3" value={form.description} onChange={onChange} /></label>
+      <label>
+        Name
+        <input name="name" value={form.name} onChange={onChange} />
+      </label>
+      <label>
+        Client or student
+        <input name="clientName" value={form.clientName} onChange={onChange} />
+      </label>
+      <label>
+        Description
+        <textarea
+          name="description"
+          rows="3"
+          value={form.description}
+          onChange={onChange}
+        />
+      </label>
 
       <fieldset>
         <legend>Members</legend>
         {developers.map((dev) => (
           <label className="check" key={dev.id}>
-            <input type="checkbox" checked={form.members.includes(dev.id)} onChange={() => toggleMember(dev.id)} />
+            <input
+              type="checkbox"
+              checked={form.members.includes(dev.id)}
+              onChange={() => toggleMember(dev.id)}
+            />
             {dev.name}
           </label>
         ))}
@@ -57,8 +78,12 @@ function ProjectForm({ project, developers, onSaved, onCancel }) {
 
       {error && <p className="error">{error}</p>}
       <div className="actions">
-        <button type="submit" disabled={saving}>{saving ? "Saving..." : "Save"}</button>
-        <button type="button" className="secondary" onClick={onCancel}>Cancel</button>
+        <button type="submit" disabled={saving}>
+          {saving ? "Saving..." : "Save"}
+        </button>
+        <button type="button" className="secondary" onClick={onCancel}>
+          Cancel
+        </button>
       </div>
     </form>
   );

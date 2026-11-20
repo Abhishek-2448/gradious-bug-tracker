@@ -4,8 +4,16 @@ import Logo from "./Logo.jsx";
 
 function Icon({ children }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       {children}
     </svg>
   );
@@ -54,7 +62,9 @@ function Sidebar() {
             <div className="side-user-role">{user.role}</div>
           </div>
         </div>
-        <button className="secondary logout-btn" onClick={logout}>Logout</button>
+        <button className="secondary logout-btn" onClick={logout}>
+          Logout
+        </button>
       </div>
     </aside>
   );

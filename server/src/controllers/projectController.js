@@ -59,7 +59,7 @@ export const updateProject = async (req, res) => {
     const project = await Project.findByIdAndUpdate(
       req.params.id,
       { name, description, clientName, members },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!project) {
